@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">All Connections</h2>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>From Alumni</th>
+                    <th>To Alumni</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Accepted At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for connection in connections %}
+                <tr>
+                    <td>{{ connection.from_alumni.fullname }} ({{ connection.from_alumni.alumniid }})</td>
+                    <td>{{ connection.to_alumni.fullname }} ({{ connection.to_alumni.alumniid }})</td>
+                    <td>
+                        {% if connection.status == 'accepted' %}
+                        <span class="status status-accepted">Accepted</span>
+                        {% elif connection.status == 'pending' %}
+                        <span class="status status-pending">Pending</span>
+                        {% else %}
+                        <span class="status status-rejected">Rejected</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ connection.created_at|date:"M d, Y H:i" }}</td>
+                    <td>{{ connection.accepted_at|date:"M d, Y H:i"|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-state">No connections found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

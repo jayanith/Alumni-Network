@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1 class="card-title text-center">About Alumni Network</h1>
+    </div>
+    <div>
+        <p style="font-size: 18px; margin-bottom: 30px; text-align: center;">
+            Alumni Networking and Relationship Management Platform
+        </p>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">Platform Overview</h3>
+                <p>Our Alumni Networking and Relationship Management Platform is designed to connect alumni, facilitate professional networking, organize events, and create opportunities for career growth and meaningful relationships. This comprehensive platform helps maintain lifelong connections between alumni and their alma mater.</p>
+            </div>
+            <div class="col-md-6">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">Key Features</h3>
+                <ul style="line-height: 2;">
+                    <li>Alumni directory and professional networking</li>
+                    <li>Connection management and relationship building</li>
+                    <li>Event organization and registration</li>
+                    <li>Job board and career opportunities</li>
+                    <li>Direct messaging system</li>
+                    <li>Profile management and updates</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px;">Platform Roles</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h4>👨‍💼 Admin</h4>
+                        <p>Manage students, alumni profiles, events, job postings, and monitor network connections. Oversee the entire alumni network platform.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h4>👨‍🎓 Student</h4>
+                        <p>Current students can access the alumni network by logging in as Alumni. Connect with graduates, explore career opportunities, and attend networking events.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <h4>👥 Alumni</h4>
+                        <p>Network with fellow alumni, manage professional connections, attend events, find job opportunities, send messages, and build lasting relationships.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 20px;">Platform Benefits</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>For Alumni:</h4>
+                    <ul style="line-height: 2;">
+                        <li>Reconnect with classmates and friends</li>
+                        <li>Expand professional network</li>
+                        <li>Discover career opportunities</li>
+                        <li>Stay updated with institution events</li>
+                        <li>Share experiences and mentorship</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>For Students:</h4>
+                    <ul style="line-height: 2;">
+                        <li>Connect with successful alumni</li>
+                        <li>Get career guidance and mentorship</li>
+                        <li>Explore job opportunities</li>
+                        <li>Attend networking events</li>
+                        <li>Build professional relationships early</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div style="margin-top: 40px; text-align: center;">
+            <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

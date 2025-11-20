@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="fade-in">
+    <h1>Instructor Dashboard</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">👤</div>
+            <div class="stat-value">{{ instructor.fullname|default:"N/A"|truncatewords:2 }}</div>
+            <div class="stat-label">Instructor Name</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🆔</div>
+            <div class="stat-value">{{ instructor.instructor_id|default:"N/A" }}</div>
+            <div class="stat-label">Instructor ID</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🏢</div>
+            <div class="stat-value">{{ instructor.department|default:"N/A" }}</div>
+            <div class="stat-label">Department</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">🎓</div>
+            <div class="stat-value">{{ instructor.specialization|default:"N/A" }}</div>
+            <div class="stat-label">Specialization</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Alumni Network Access</h3>
+        </div>
+        <div>
+            <p class="mb-4">Instructors can access the alumni network by logging in as Alumni to connect with former students and colleagues.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Access Alumni Network</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

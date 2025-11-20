@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Edit Job Posting</h2>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Job Title *</label>
+                    <input type="text" name="title" class="form-control" value="{{ job.title }}" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Company *</label>
+                    <input type="text" name="company" class="form-control" value="{{ job.company }}" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control" value="{{ job.location }}">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="4">{{ job.description }}</textarea>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Requirements</label>
+                    <textarea name="requirements" class="form-control" rows="4">{{ job.requirements }}</textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Posted By (Alumni) *</label>
+                    <select name="posted_by" class="form-control" required>
+                        {% for a in alumni %}
+                        <option value="{{ a.id }}" {% if job.posted_by.id == a.id %}selected{% endif %}>{{ a.fullname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Application Deadline</label>
+                    <input type="datetime-local" name="application_deadline" class="form-control" value="{{ job.application_deadline|date:'Y-m-d\TH:i' }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Contact Email</label>
+                    <input type="email" name="contact_email" class="form-control" value="{{ job.contact_email }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Active</label>
+                    <input type="checkbox" name="is_active" {% if job.is_active %}checked{% endif %}>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button type="submit" class="btn btn-primary">Update Job Posting</button>
+            <a href="{% url 'alljobs' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Add New Event</h2>
+    </div>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Event Title *</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea name="description" class="form-control" rows="4"></textarea>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Event Date & Time *</label>
+                    <input type="datetime-local" name="event_date" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Event Type</label>
+                    <select name="event_type" class="form-control">
+                        <option value="">Select</option>
+                        <option value="networking">Networking</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="reunion">Reunion</option>
+                        <option value="seminar">Seminar</option>
+                        <option value="conference">Conference</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-label">Max Attendees</label>
+                    <input type="number" name="max_attendees" class="form-control" min="1">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label">Organizer (Alumni)</label>
+                    <select name="organizer_id" class="form-control">
+                        <option value="">None</option>
+                        {% for a in alumni %}
+                        <option value="{{ a.id }}">{{ a.fullname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="action-buttons">
+            <button type="submit" class="btn btn-primary">Add Event</button>
+            <a href="{% url 'allevents' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
