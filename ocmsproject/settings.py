@@ -1,21 +1,27 @@
-"""
-Django settings for ocmsproject project.
-"""
-
 from pathlib import Path
 import os
 
-# Build paths inside the project
+# Build paths
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production!
 SECRET_KEY = 'django-insecure-lakw1()!smzwh)wvzz8gx9mpf+9f&h65%@-by3zv8!^77_0a-^'
 
-# In Railway, DEBUG must be False for static files
+# Railway deploy → DEBUG must be False
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+# Allow all (Railway needs this)
+ALLOWED_HOSTS = ["*"]
 
+# CSRF FIX FOR RAILWAY
+CSRF_TRUSTED_ORIGINS = [
+    "https://web-production-7b20e.up.railway.app"
+]
+
+# (Optional, but safe)
+CORS_ALLOWED_ORIGINS = [
+    "https://web-production-7b20e.up.railway.app"
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -34,7 +40,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
-    # whitenoise must be right here
+    # WHITENOISE MUST BE HERE
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,16 +70,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ocmsproject.wsgi.application'
 
-
-
-# Database (SQLite for Railway free-tier)
+# SQLite DB (works fine in Railway)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -83,25 +86,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-
-# STATIC FILES (IMPORTANT)
+# STATIC FILES — VERY IMPORTANT FOR RAILWAY
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
 # MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
