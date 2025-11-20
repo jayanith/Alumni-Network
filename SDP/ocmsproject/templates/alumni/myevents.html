@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">My Registered Events</h2>
+    </div>
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Event Title</th>
+                    <th>Event Date</th>
+                    <th>Location</th>
+                    <th>Type</th>
+                    <th>Registered At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for registration in registrations %}
+                <tr>
+                    <td>{{ registration.event.title }}</td>
+                    <td>{{ registration.event.event_date|date:"M d, Y H:i" }}</td>
+                    <td>{{ registration.event.location|default:"TBA" }}</td>
+                    <td>{{ registration.event.event_type|default:"General" }}</td>
+                    <td>{{ registration.registered_at|date:"M d, Y H:i" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-state">No registered events</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

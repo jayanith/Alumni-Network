@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">My Connections</h2>
+    </div>
+    
+    <div class="role-tabs mb-6">
+        <button class="role-tab active" onclick="switchTab('connected')">Connected</button>
+        <button class="role-tab" onclick="switchTab('pending')">Pending Requests</button>
+    </div>
+    
+    <!-- Connected Alumni -->
+    <div id="connected" class="tab-content active">
+        <h3>Your Connections</h3>
+        <div class="row">
+            {% for a in connected_alumni %}
+            <div class="col-md-4 mb-6">
+                <div class="card">
+                <div>
+                    <h4>{{ a.fullname }}</h4>
+                    <p><strong>ID:</strong> {{ a.alumniid }}</p>
+                    <p><strong>Department:</strong> {{ a.department }}</p>
+                    <p><strong>Position:</strong> {{ a.current_position|default:"-" }}</p>
+                    <p><strong>Company:</strong> {{ a.company|default:"-" }}</p>
+                    <div class="mt-4">
+                        <a href="{% url 'viewconversation' a.id %}" class="btn btn-primary btn-sm">Message</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% empty %}
+            <p>No connections yet. <a href="{% url 'alumnidirectory' %}">Browse alumni directory</a> to connect!</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Pending Requests -->
+    <div id="pending" class="tab-content">
+        <h3>Pending Connection Requests</h3>
+        
+        <h4>Received Requests</h4>
+        {% for conn in pending_received %}
+        <div class="card mb-4">
+            <div>
+                <h5>{{ conn.from_alumni.fullname }}</h5>
+                <p>{{ conn.from_alumni.department }} - {{ conn.from_alumni.program }}</p>
+                <div class="action-buttons mt-4">
+                    <a href="{% url 'acceptconnection' conn.id %}" class="btn btn-success btn-sm">Accept</a>
+                    <a href="{% url 'rejectconnection' conn.id %}" class="btn btn-danger btn-sm">Reject</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No pending received requests</p>
+        {% endfor %}
+        
+        <h4 class="mt-6">Sent Requests</h4>
+        {% for conn in pending_sent %}
+        <div class="card mb-4">
+            <div>
+                <h5>{{ conn.to_alumni.fullname }}</h5>
+                <p>{{ conn.to_alumni.department }} - {{ conn.to_alumni.program }}</p>
+                <div class="mt-4">
+                    <span class="status status-pending">Pending</span>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No pending sent requests</p>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    // Hide all tab contents
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+    
+    // Show selected tab content and add active class
+    if (tab === 'connected') {
+        document.getElementById('connected').classList.add('active');
+        document.querySelectorAll('.role-tab')[0].classList.add('active');
+    } else if (tab === 'pending') {
+        document.getElementById('pending').classList.add('active');
+        document.querySelectorAll('.role-tab')[1].classList.add('active');
+    }
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">All Events</h2>
+    </div>
+    
+    <div class="row">
+        {% for item in event_list %}
+        <div class="col-md-6">
+            <div class="card mb-6">
+                <div>
+                    <h3>{{ item.event.title }}</h3>
+                    <p><strong>Date:</strong> {{ item.event.event_date|date:"M d, Y H:i" }}</p>
+                    <p><strong>Location:</strong> {{ item.event.location|default:"TBA" }}</p>
+                    <p><strong>Type:</strong> {{ item.event.event_type|default:"General" }}</p>
+                    <p><strong>Registrations:</strong> {{ item.registrations_count }}{% if item.event.max_attendees %} / {{ item.event.max_attendees }}{% endif %}</p>
+                    {% if item.event.description %}
+                    <p>{{ item.event.description|truncatewords:20 }}</p>
+                    {% endif %}
+                    {% if item.is_registered %}
+                    <span class="status status-active">Registered</span>
+                    <a href="{% url 'myevents' %}" class="btn btn-sm btn-secondary mt-4">View My Events</a>
+                    {% else %}
+                    <a href="{% url 'registerevent' item.event.id %}" class="btn btn-primary btn-sm">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No events available</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2 class="card-title">Conversation with {{ contact.fullname }}</h2>
+    </div>
+    
+    <div style="padding: 20px;">
+        <div style="max-height: 400px; overflow-y: auto; margin-bottom: 20px; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
+            {% for message in conversation %}
+            <div style="margin-bottom: 15px; padding: 10px; background: {% if message.sender == alumni %}#e3f2fd{% else %}#f5f5f5{% endif %}; border-radius: 5px;">
+                <p><strong>{{ message.sender.fullname }}</strong> <small>({{ message.sent_at|date:"M d, Y H:i" }})</small></p>
+                {% if message.subject %}
+                <p><strong>Subject:</strong> {{ message.subject }}</p>
+                {% endif %}
+                <p>{{ message.content|linebreaks }}</p>
+            </div>
+            {% empty %}
+            <p>No messages yet. Start the conversation!</p>
+            {% endfor %}
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Subject (optional)</label>
+                <input type="text" name="subject" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Message *</label>
+                <textarea name="content" class="form-control" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <a href="{% url 'messages' %}" class="btn btn-secondary">Back to Messages</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
